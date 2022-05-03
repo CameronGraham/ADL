@@ -5,6 +5,9 @@ namespace ADL.Data
     public class EngineerRequest
     {
 
+        //change to guid
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Please enter a First Name")]    
         [Display(Name = "First Name")]
         public string? FirstName { get; set; }
@@ -32,8 +35,9 @@ namespace ADL.Data
         public string? Postcode { get; set; }
 
         [Required(ErrorMessage = "Please select an Appointment Date")]
+        [DataType(DataType.Date)]
         [Display(Name = "Appointment Date")]
-        public DateOnly? AppointmentDate { get; set; }
+        public DateTime? AppointmentDate { get; set; }
 
         [Required(ErrorMessage = "Please select an Appointment Time")]
         [Display(Name = "Appointment Time")]

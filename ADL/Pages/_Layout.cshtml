@@ -27,6 +27,21 @@
         <a class="dismiss">🗙</a>
     </div>
 
+    <script> 
+        function GetDateTime() {      
+            var date = addDays(Date(), 2);
+
+            document.getElementById("AppointmentDate").setAttribute('min', date.toLocaleDateString('en-CA'));
+            console.log(date.toLocaleDateString());
+        } 
+
+        function addDays(date, days) {
+          var result = new Date(date);
+          result.setDate(result.getDate() + days);
+          return result;
+        }
+    </script> 
+
     <script src="_framework/blazor.server.js"></script>
 </body>
 </html>
