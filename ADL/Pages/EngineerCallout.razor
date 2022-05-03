@@ -1,0 +1,125 @@
+﻿@page "/EngineerCallout"
+@using ADL.Data
+@using Microsoft.Extensions.Logging
+@inject ILogger<EngineerCallout> Logger
+
+<h2>Book an Engineer Callout</h2>
+
+<EditForm EditContext="@editContext" OnSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    
+    
+    <p>
+        
+            <InputText id="FirstName" placeholder="First Name *" @bind-Value="engineerRequest.FirstName" />
+            <ValidationMessage For="() => engineerRequest.FirstName"/>
+        
+    </p>
+    <p>
+        
+            <InputText id="LastName" placeholder="Last Name *" @bind-Value="engineerRequest.LastName" />
+               <ValidationMessage For="() => engineerRequest.LastName"/>
+        
+    </p>
+    <p>
+        <InputText id="EmailAddress" placeholder="Email Address *" @bind-Value="engineerRequest.EmailAddress" />
+    <ValidationMessage For="() => engineerRequest.EmailAddress"/>
+    </p>
+    <p>
+        <InputText id="ContactNumber" placeholder="Contact Number *" @bind-Value="engineerRequest.ContactNumber" />
+    <ValidationMessage For="() => engineerRequest.ContactNumber"/>
+    </p>
+    <p>
+        <InputText id="Address" placeholder="Address *" @bind-Value="engineerRequest.Address" />
+    <ValidationMessage For="() => engineerRequest.Address"/>
+    </p>
+    <p>
+        <InputText id="Town" placeholder="Town *" @bind-Value="engineerRequest.Town" />
+   <ValidationMessage For="() => engineerRequest.Town"/>
+    </p>
+    <p>
+        <InputText id="Postcode" placeholder="Postcode *" @bind-Value="engineerRequest.Postcode" />
+    <ValidationMessage For="() => engineerRequest.Postcode"/>
+    </p>
+    <p>
+        <InputDate id="AppointmentDate" placeholder="Appointment Date *" @bind-Value="engineerRequest.AppointmentDate" />
+    <ValidationMessage For="() => engineerRequest.AppointmentDate"/>
+    </p>
+    <p>
+        <InputText id="AppointmentTime" placeholder="Appointment Time *" @bind-Value="engineerRequest.AppointmentTime" />
+    <ValidationMessage For="() => engineerRequest.AppointmentTime"/>
+    </p>
+    <p>
+        <InputText id="VehicleRegistation" placeholder="Vehicle Registration *" @bind-Value="engineerRequest.VehicleRegistation" />
+    <ValidationMessage For="() => engineerRequest.VehicleRegistation"/>
+    </p>
+    <p>
+        <InputSelect id="JobCategory" @bind-Value="engineerRequest.JobCategory">
+            <option value="">Select Job Category *</option>
+            <option value="JobCategory.warranty">Warranty</option>
+            <option value="JobCategory.breakdown">Breakdown</option>
+            <option value="JobCategory.vehicleoffroad">Vehicle off Road</option>
+        </InputSelect>
+    <ValidationMessage For="() => engineerRequest.JobCategory"/>
+    </p>
+    <p>
+        <InputTextArea id="Comments" placeholder="Comments" @bind-Value="engineerRequest.Comments" />
+    </p>
+    <p>
+        <button type="submit">Submit</button>
+    </p>
+
+    <p>* Required</p>
+</EditForm>
+
+@code {
+    private EngineerRequest engineerRequest = new();
+    private EditContext? editContext;
+    private ValidationMessageStore? messageStore;
+
+    protected override void OnInitialized()
+    {
+        editContext = new(engineerRequest);
+        editContext.OnValidationRequested += HandleValidationRequested;
+        messageStore = new(editContext);
+    }
+
+
+    //maybe custom validation
+    private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
+    {
+        messageStore?.Clear();
+
+
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (editContext != null && editContext.Validate())
+        {
+            Logger.LogInformation("HandleSubmit form is valid");
+
+            //process form
+            //await
+
+            await Task.CompletedTask;
+        }
+        else
+        {
+
+            Logger.LogInformation("HandleSubmit form is invalid");
+        }
+    }
+
+
+    private void HandleValidSubmit()
+    {
+        Logger.LogInformation("HandleValidSubmit called");
+
+        //Process the form data
+    }
+
+    private enum JobCategory {warranty, breakdown, vehicleoffroad}
+
+    private enum TimeLots { }
+}
