@@ -82,6 +82,56 @@ namespace ADL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Requests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "123 Test Way",
+                            AppointmentDate = new DateTime(2022, 5, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AppointmentTime = "11:00 - 13:00",
+                            Comments = "The bus is broken",
+                            ContactNumber = "12345678910",
+                            EmailAddress = "joe.bloggs@email.com",
+                            FirstName = "Joe",
+                            JobCategory = "breakdown",
+                            LastName = "Bloggs",
+                            Postcode = "postcode",
+                            Town = "TownName",
+                            VehicleRegistation = "1234567"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "124 Test Way",
+                            AppointmentDate = new DateTime(2022, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AppointmentTime = "09:00 - 11:00",
+                            Comments = "Engine making noise",
+                            ContactNumber = "12345678910",
+                            EmailAddress = "janedoe@email.com",
+                            FirstName = "Jane",
+                            JobCategory = "warranty",
+                            LastName = "Doe",
+                            Postcode = "postcode",
+                            Town = "TownName",
+                            VehicleRegistation = "1234567"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "125 Test Way",
+                            AppointmentDate = new DateTime(2022, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AppointmentTime = "09:00 - 11:00",
+                            Comments = "The bus is broken",
+                            ContactNumber = "12345678910",
+                            EmailAddress = "joe.bloggs@email.com",
+                            FirstName = "Joe",
+                            JobCategory = "breakdown",
+                            LastName = "Bloggs",
+                            Postcode = "postcode",
+                            Town = "TownName",
+                            VehicleRegistation = "1234567"
+                        });
                 });
 #pragma warning restore 612, 618
         }

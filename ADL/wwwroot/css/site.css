@@ -1,8 +1,13 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
+
+h1, h2, h3, h4, h5, h6 {
+    color:#044589;
+}
+
 
 h1:focus {
     outline: none;
@@ -23,15 +28,17 @@ a, .btn-link {
 }
 
 .valid.modified:not([type=checkbox]) {
-    outline: 1px solid #26b050;
+    outline: 1px solid #044589;
 }
 
 .invalid {
-    outline: 1px solid red;
+    outline: 1px solid #dc3545;
 }
 
+
 .validation-message {
-    color: red;
+    color: #dc3545;
+    font-size: 0.9em;
 }
 
 #blazor-error-ui {
@@ -62,3 +69,83 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.form input[type="radio"] {
+    display: none;
+}
+
+
+.form .timeslotLabel {
+    position: relative;
+    color: #044589;
+    background-color: #f1f1f1;
+    font-size: 1.5em;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    border: 2px solid #f1f1f1;
+    border-radius: 0.75rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 1em 0;
+}
+
+    .form .timeslotLabel:hover {
+        border: 2px solid #044589;
+    }
+
+.form input[type="radio"]:checked + .timeslotLabel {
+    border: 2px solid #044589;
+    background-color: #044589;
+    color: #fff;
+}
+
+.form-control:disabled + .timeslotLabel {
+    background-color: #adb5bd;
+    opacity:50%;
+}
+
+.wrapper {
+    position:relative;
+}
+#infoi {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 1.25em;
+    padding-top: 0.25em;
+    color: #044589;
+}
+
+.formSectionHeader {
+    color: #044589;
+    font-weight:600;
+}
+.floatingLabel {
+    opacity:0.65;
+}
+
+.btn-adl {
+    width: 100%;
+    color: #fff;
+    background-color: #044589;
+    border-color: #044589;
+}
+
+    .btn-adl:hover {
+        color: #fff;
+        background-color: #022952;
+        border-color: #022952;
+    }
+
+
+.invalidSubmit {
+    display:none;
+}
+
+.validSubmit {
+    display:block;
+}

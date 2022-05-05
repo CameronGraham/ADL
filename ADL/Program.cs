@@ -1,6 +1,7 @@
 using ADL.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -12,9 +13,14 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddDbContextFactory<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-
-
 var app = builder.Build();
+
+
+app.MapGet("/requests", ([FromServices] ApplicationDbContext db) =>
+{
+    return db.Requests.ToList();
+});
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

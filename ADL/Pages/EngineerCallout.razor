@@ -1,113 +1,196 @@
 ﻿@page "/EngineerCallout"
 @using ADL.Data
+@using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Logging
 @inject ILogger<EngineerCallout> Logger
 @inject IJSRuntime JSRuntime
 @inject ADL.Data.ApplicationDbContext _context
 
-<h2>Book an Engineer Callout</h2>
-
-<div class="request-form">
-<EditForm EditContext="@editContext" OnSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator />
 
 
-    <p>
-        <InputText id="FirstName" placeholder="First Name *" @bind-Value="engineerRequest.FirstName" />
-        <ValidationMessage For="() => engineerRequest.FirstName" />
-    </p>
-    <p>
-        <InputText id="LastName" placeholder="Last Name *" @bind-Value="engineerRequest.LastName" />
-        <ValidationMessage For="() => engineerRequest.LastName" />
-    </p>
-    <p>
-        <InputText id="EmailAddress" placeholder="Email Address *" @bind-Value="engineerRequest.EmailAddress" />
-        <ValidationMessage For="() => engineerRequest.EmailAddress" />
-    </p>
-    <p>
-        <InputText id="ContactNumber" placeholder="Contact Number *" @bind-Value="engineerRequest.ContactNumber" />
-        <ValidationMessage For="() => engineerRequest.ContactNumber" />
-    </p>
-    <p>
-        <InputText id="Address" placeholder="Address *" @bind-Value="engineerRequest.Address" />
-        <ValidationMessage For="() => engineerRequest.Address" />
-    </p>
-    <p>
-        <InputText id="Town" placeholder="Town *" @bind-Value="engineerRequest.Town" />
-        <ValidationMessage For="() => engineerRequest.Town" />
-    </p>
-    <p>
-        <InputText id="Postcode" placeholder="Postcode *" @bind-Value="engineerRequest.Postcode" />
-        <ValidationMessage For="() => engineerRequest.Postcode" />
-    </p>
-    <p>
-        <InputDate id="AppointmentDate" placeholder="Appointment Date *" @bind-Value="engineerRequest.AppointmentDate" min="" />
-        <ValidationMessage For="() => engineerRequest.AppointmentDate" />
-    </p>
-    <p>
-        <InputRadioGroup id="AppointmentTime" placeholder="Appointment Time *" @bind-Value="engineerRequest.AppointmentTime">
-            @if(TimeSlotsDay.First() == "Weekend"){
-                <p>There are no time slots available on the weekend</p>
-            }else if(TimeSlotsDay.First() == "None")
-            {
-                <p>Please select a date to see available timeslots</p>
-            }
-            else
-            {
-               foreach (var timeSlot in TimeSlotsDay)
-                {
-                    <InputRadio Value="timeSlot" /> @timeSlot <br />
-                } 
-            }
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-xxl-6">
+            <h2 class="mb-3">Book an Engineer Callout</h2>
+
+            <div class="request-form">
+                <EditForm class="form" EditContext="@editContext" OnSubmit="@HandleValidSubmit">
+                    <DataAnnotationsValidator />
 
 
-                
-            
-            
+                    <div class="row">
+                        <p class="formSectionHeader mt-3">Your details</p>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <InputText id="FirstName" class="form-control" placeholder="First Name *" @bind-Value="engineerRequest.FirstName" />
+                                <label class="floatingLabel" for="FirstName">First Name *</label>
+                                <ValidationMessage For="() => engineerRequest.FirstName" />
+                            </div>
 
-        </InputRadioGroup>
-        <ValidationMessage For="() => engineerRequest.AppointmentTime" />
-    </p>
-    <p>
-        <InputText id="VehicleRegistation" placeholder="Vehicle Registration *" @bind-Value="engineerRequest.VehicleRegistation" />
-        <ValidationMessage For="() => engineerRequest.VehicleRegistation" />
-    </p>
-    <p>
-        <InputSelect id="JobCategory" @bind-Value="engineerRequest.JobCategory">
-            <option value="">Select Job Category *</option>
-            <option value="warranty">Warranty</option>
-            <option value="breakdown">Breakdown</option>
-            <option value="vehicleoffroad">Vehicle off Road</option>
-        </InputSelect>
-        <ValidationMessage For="() => engineerRequest.JobCategory" />
-    </p>
-    <p>
-        <InputTextArea id="Comments" placeholder="Comments" @bind-Value="engineerRequest.Comments" />
-    </p>
-    <p>
-        <button type="submit">Submit</button>
-    </p>
+                            <div class="form-floating mb-3">
+                                <InputText id="LastName" class="form-control" placeholder="Last Name *" @bind-Value="engineerRequest.LastName" />
+                                <label class="floatingLabel" for="LastName">Last Name *</label>
+                                <ValidationMessage For="() => engineerRequest.LastName" />
+                            </div>
+                            <div class="form-floating mb-3">
+                                <InputText id="EmailAddress" class="form-control" placeholder="Email Address *" @bind-Value="engineerRequest.EmailAddress" />
+                                <label class="floatingLabel" for="EmailAddress">Email Address *</label>
+                                <ValidationMessage For="() => engineerRequest.EmailAddress" />
+                            </div>
+                            <div class="form-floating mb-3">
+                                <InputText id="ContactNumber" class="form-control" placeholder="Contact Number *" @bind-Value="engineerRequest.ContactNumber" />
+                                <label class="floatingLabel" for="ContactNumber">Contact Number *</label>
+                                <ValidationMessage For="() => engineerRequest.ContactNumber" />
+                            </div>
+                        </div>
+                       
 
-    <p>* Required</p>
-</EditForm>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <InputText id="Address" class="form-control" placeholder="Address *" @bind-Value="engineerRequest.Address" />
+                                <label class="floatingLabel" for="Address">Address *</label>
+                                <ValidationMessage For="() => engineerRequest.Address" />
+                            </div>
+                            <div class="form-floating mb-3">
+                                <InputText id="Town" class="form-control" placeholder="Town *" @bind-Value="engineerRequest.Town" />
+                                <label class="floatingLabel" for="Town">Town *</label>
+                                <ValidationMessage For="() => engineerRequest.Town" />
+                            </div>
+                            <div class="form-floating mb-3">
+                                <InputText id="Postcode" class="form-control" placeholder="Postcode *" @bind-Value="engineerRequest.Postcode" />
+                                <label class="floatingLabel" for="Postcode">Postcode *</label>
+                                <ValidationMessage For="() => engineerRequest.Postcode" />
+                            </div>
+                           </div>
+                    
+                           <p class="formSectionHeader mt-3">Vehicle details</p>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <InputText id="VehicleRegistation" class="form-control" placeholder="Vehicle Registration *" @bind-Value="engineerRequest.VehicleRegistation" />
+                                    <label class="floatingLabel" for="VehicleRegistation">Vehicle Registation *</label>
+                                    <ValidationMessage For="() => engineerRequest.VehicleRegistation" />
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <InputSelect id="JobCategory" class="form-select" @bind-Value="engineerRequest.JobCategory">
+                                        <option value="">Select Job Category *</option>
+                                        <option value="warranty">Warranty</option>
+                                        <option value="breakdown">Breakdown</option>
+                                        <option value="vehicleoffroad">Vehicle off Road</option>
+                                    </InputSelect>
+                                    <label class="floatingLabel" for="JobCategory">Select Job Category *</label>
+                                    <ValidationMessage For="() => engineerRequest.JobCategory" />
+                                </div>
+
+                            </div>
+                        
+                        
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <InputTextArea id="Comments" class="form-control" placeholder="Comments" @bind-Value="engineerRequest.Comments" style="height: 10em" />
+                                    <label class="floatingLabel" for="Comments">Additional comments</label>
+                                </div>
+
+
+                                <div class="form-floating mb-3">
+                                    <InputDate id="AppointmentDate" class="form-control" placeholder="Appointment Date *" @bind-Value="engineerRequest.AppointmentDate" min="@minDate.ToString("yyyy-MM-dd")" />
+                                    <label class="floatingLabel" for="AppointmentDate">Appointment Date *</label>
+                                    <ValidationMessage For="() => engineerRequest.AppointmentDate" />
+                                </div>
+                                <div class="row mb-3">
+                                    <InputRadioGroup id="AppointmentTime" placeholder="Appointment Time *" @bind-Value="engineerRequest.AppointmentTime">
+
+                                        @if (TimeSlotsDay.First() == "Weekend")
+                                        {
+                                            <div class="col">
+                                                <div class="alert alert-danger" role="alert">There are no time slots available on the weekend</div>
+                                            </div>
+                                        }
+                                        else if (TimeSlotsDay.First() == "None")
+                                        {
+                                            <div class="col">
+                                                <div class="alert alert-secondary" role="alert">Please select a date to see available timeslots</div>
+                                            </div>
+                                        }
+
+                                        else
+                                        {
+                                            foreach (var timeSlot in TimeSlotsDay)
+                                            {
+                                                <div class="col-md mb-3">
+                                                    @if (Requests.Where(x => x.AppointmentTime == timeSlot).Any())
+                                                    {
+                                                        <div class="wrapper">
+                                                            <InputRadio disabled class="form-control" Value="timeSlot" id="@timeSlot" />
+                                                            <label class="timeslotLabel" for="@timeSlot">@timeSlot</label>
+                                                            <div id="infoi">Unavailable</div>
+                                                        </div>
+
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <InputRadio class="form-control" Value="timeSlot" id="@timeSlot" />
+                                                        <label class="timeslotLabel" for="@timeSlot">@timeSlot</label>
+
+
+                                                    }
+                                                </div>
+
+                                            }
+                                        }
+                                    </InputRadioGroup>
+                                    <ValidationMessage For="() => engineerRequest.AppointmentTime" />
+                                </div>
+                            </div>
+                         </div>
+
+                          <div class="alert alert-success @submitStatus" role="alert">
+                            Your booking has been made
+                        </div>
+
+                    <div class="col-sm-12 col-md-3 mb-3">
+                        <button type="submit" class="btn btn-adl">Book now</button>
+                    </div>
+
+                    <div class="float-end">* Required</div>
+                </EditForm>
+
+               
+
+            </div>
+        </div>
+    </div>
 </div>
+
 
 @code {
     private EngineerRequest engineerRequest = new EngineerRequest();
     private EditContext? editContext;
+    public List<EngineerRequest> Requests = new List<EngineerRequest>();
+
+    string submitStatus = "invalidSubmit";
+
+    
+
+    DateTime minDate = DateTime.Now.AddDays(2);
 
 
-    private void getAvailableTimes() {
-        var test = _context.Requests.Where(x => x.AppointmentDate == engineerRequest.AppointmentDate).Select(x => x.AppointmentTime).ToList();
-        Console.WriteLine(test);
-        Console.WriteLine("test");
+
+    private void GetTimeslots()
+    {
+        Requests = _context.Requests.Where(x => x.AppointmentDate == engineerRequest.AppointmentDate).OrderByDescending(_ => _.Id).ToList();
+
     }
 
     protected override void OnInitialized()
     {
         editContext = new EditContext(engineerRequest);
         editContext.OnFieldChanged += editContext_OnFieldChanged;
-        
+
         base.OnInitialized();
     }
 
@@ -115,75 +198,81 @@
     {
         if (e.FieldIdentifier.FieldName == "AppointmentDate")
         {
-            getAvailableTimes();
+            GetTimeslots();
 
-            DayOfWeek? dayOfWeek = engineerRequest.AppointmentDate.Value.DayOfWeek;
+            string dayOfWeek = "None";
+
+            if (engineerRequest.AppointmentDate == null)
+            {
+                engineerRequest.AppointmentDate = minDate;
+            }
+            dayOfWeek = engineerRequest.AppointmentDate.Value.DayOfWeek.ToString();
 
             switch (dayOfWeek)
             {
-                case DayOfWeek.Monday:
+                case "Monday":
+
                     TimeSlotsDay = TimeSlotsMonday;
                     break;
-                case DayOfWeek.Tuesday:
+                case "Tuesday":
                     TimeSlotsDay = TimeSlotsTuesday;
                     break;
-                case DayOfWeek.Wednesday:
+                case "Wednesday":
                     TimeSlotsDay = TimeSlotsWednesday;
                     break;
-                case DayOfWeek.Thursday:
+                case "Thursday":
                     TimeSlotsDay = TimeSlotsThursday;
                     break;
-                case DayOfWeek.Friday:
+                case "Friday":
                     TimeSlotsDay = TimeSlotsFriday;
                     break;
-                case DayOfWeek.Saturday:
+                case "Saturday":
                     TimeSlotsDay = TimeSlotsSaturday;
                     break;
-                case DayOfWeek.Sunday:
-                    TimeSlotsDay = TimeSlotsSunday; 
+                case "Sunday":
+                    TimeSlotsDay = TimeSlotsSunday;
                     break;
+                default:
+                    TimeSlotsDay = TimeSlotsDay;
+                    break;
+
             }
         }
     }
 
 
-    //private async Task HandleSubmit()
-    //{
-    //    if (editContext != null && editContext.Validate())
-    //    {
-    //        Logger.LogInformation("HandleSubmit form is valid");
 
-    //        //process form
-    //        //await
-
-    //        await Task.CompletedTask;
-    //    }
-    //    else
-    //    {
-    //        Logger.LogInformation("HandleSubmit form is invalid");
-    //    }
-    //}
-
-    private async void HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
         Logger.LogInformation("HandleValidSubmit called");
 
         try
         {
-            Logger.LogInformation("Adding to context");
-            _context.Requests.Add(engineerRequest);
-            await _context.SaveChangesAsync();
+            if (editContext != null && editContext.Validate())
+            {
+                Logger.LogInformation("HandleSubmit form is valid");
+                Logger.LogInformation("Adding to context");
+                _context.Requests.Add(engineerRequest);
+                await _context.SaveChangesAsync();
+
+                submitStatus = "validSubmit";            
+            
+
+                //re-render form
+                engineerRequest = new EngineerRequest();
+            }    
+
         }
         catch
         {
             base.StateHasChanged();
         }
 
-        //re-render form
-        engineerRequest = new EngineerRequest();
-        base.StateHasChanged();
+        
+        
+        //base.StateHasChanged();
 
-       
+
     }
 
     private enum JobCategory { warranty, breakdown, vehicleoffroad }
@@ -196,15 +285,5 @@
     List<string> TimeSlotsSaturday = new List<string> { "Weekend" };
     List<string> TimeSlotsSunday = new List<string> { "Weekend" };
     List<string> TimeSlotsDay = new List<string> { "None" };
-
-    protected async override Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JSRuntime.InvokeVoidAsync("GetDateTime");
-        }
-    }
-
-
 
 }

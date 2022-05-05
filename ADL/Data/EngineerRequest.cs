@@ -8,7 +8,7 @@ namespace ADL.Data
         //change to guid
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Please enter a First Name")]    
+        [Required(ErrorMessage = "Please enter a First Name")]
         [Display(Name = "First Name")]
         public string? FirstName { get; set; }
 
@@ -25,10 +25,10 @@ namespace ADL.Data
         [Display(Name = "Contact Number")]
         public string? ContactNumber { get; set; }
 
-        [Required(ErrorMessage = "Please enter an Address")]      
+        [Required(ErrorMessage = "Please enter an Address")]
         public string? Address { get; set; }
 
-        [Required(ErrorMessage = "Please enter a Town")]       
+        [Required(ErrorMessage = "Please enter a Town")]
         public string? Town { get; set; }
 
         [Required(ErrorMessage = "Please enter a Postcode")]
@@ -36,6 +36,7 @@ namespace ADL.Data
 
         [Required(ErrorMessage = "Please select an Appointment Date")]
         [DataType(DataType.Date)]
+        [DateValidate]
         [Display(Name = "Appointment Date")]
         public DateTime? AppointmentDate { get; set; }
 
@@ -60,3 +61,5 @@ namespace ADL.Data
 
     }
 }
+
+

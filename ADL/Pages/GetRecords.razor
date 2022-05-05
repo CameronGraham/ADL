@@ -1,0 +1,90 @@
+﻿@page "/getrecords"
+@using ADL.Data
+@using Microsoft.EntityFrameworkCore
+@using System.Xml.Linq
+@inject ADL.Data.ApplicationDbContext _context
+
+<div class="alert alert-primary" role="alert">
+  Data is stored in MSSQLLocalDB in ADLData dbo.Requests - 3 Sets of sample data are seeded on DB Migration - if nothing shows, run <strong>Update-Database</strong> in nuGet Package Manager Console
+</div>
+
+<div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email Address</th>
+                <th scope="col">Contact Number</th>
+                <th scope="col">Address</th>
+                <th scope="col">Town</th>
+                <th scope="col">Postcode</th>
+                <th scope="col">Appointment Date</th>
+                <th scope="col">Appointment Time</th>
+                <th scope="col">Vehicle Registation</th>
+                <th scope="col">Job Category</th>
+                <th scope="col">Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Requests)
+            {
+                <tr>
+                    <th scope="row">@request.Id</th>
+                    <td>@request.FirstName</td>
+                    <td>@request.LastName</td>
+                    <td>@request.EmailAddress</td>
+                    <td>@request.ContactNumber</td>
+                    <td>@request.Address</td>
+                    <td>@request.Town</td>
+                    <td>@request.Postcode</td>
+                    <td>@request.AppointmentDate</td>
+                    <td>@request.AppointmentTime</td>
+                    <td>@request.VehicleRegistation</td>
+                    <td>@request.JobCategory</td>
+                    <td>@request.Comments</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="alert alert-success" role="alert">
+  This page has also generated an XML file in the wwwroot directory (<a href="requests.xml">requests.xml</a>)
+</div>
+
+@code {
+    public List<EngineerRequest> Requests = new List<EngineerRequest>();
+    protected override async Task OnInitializedAsync()
+    {
+        Requests = await _context.Requests.OrderByDescending(_ => _.Id).ToListAsync();
+
+        //add to button? more useful to generate one page load, could possibly generate on form submission - potential issues if lots of forms entered in short timespan.
+        if (Requests.Count > 0)
+        {
+                var xElm = new XElement("Requests",
+                from req in Requests
+                select new XElement("Request",
+                    new XElement("Id", req.Id),
+                    new XElement("FirstName", req.FirstName),
+                    new XElement("LastName", req.LastName),
+                    new XElement("EmailAddress", req.EmailAddress),
+                    new XElement("ContactNumber", req.ContactNumber),
+                    new XElement("Address", req.Address),
+                    new XElement("Town", req.Town),
+                    new XElement("Postcode", req.Postcode),
+                    new XElement("AppointmentDate", req.AppointmentDate),
+                    new XElement("AppointmentTime", req.AppointmentTime),
+                    new XElement("VehicleRegistation", req.VehicleRegistation),
+                    new XElement("JobCategory", req.JobCategory),
+                    new XElement("Comments", req.Comments)
+                ));
+
+                //just saves to wwwroot
+                xElm.Save("wwwroot/requests.xml");
+        }
+
+    }
+
+}
