@@ -12,9 +12,11 @@
     <div class="row justify-content-md-center">
         <div class="col-xxl-6">
             <h2 class="mb-3">Book an Engineer Callout</h2>
-
+               <div class="alert alert-success @submitStatus" role="alert">
+                            Your booking has been made <button @onclick="resetForm" class="btn btn-adl mt-3">Book another</button>
+                        </div>
             <div class="request-form">
-                <EditForm class="form" EditContext="@editContext" OnSubmit="@HandleValidSubmit">
+                <EditForm class="@formStatus" EditContext="@editContext" OnSubmit="@HandleValidSubmit">
                     <DataAnnotationsValidator />
 
 
@@ -91,6 +93,7 @@
                                 <div class="form-floating mb-3">
                                     <InputTextArea id="Comments" class="form-control" placeholder="Comments" @bind-Value="engineerRequest.Comments" style="height: 10em" />
                                     <label class="floatingLabel" for="Comments">Additional comments</label>
+                                    <ValidationMessage For="() => engineerRequest.Comments" />
                                 </div>
 
 
@@ -148,9 +151,7 @@
                             </div>
                          </div>
 
-                          <div class="alert alert-success @submitStatus" role="alert">
-                            Your booking has been made
-                        </div>
+                       
 
                     <div class="col-sm-12 col-md-3 mb-3">
                         <button type="submit" class="btn btn-adl">Book now</button>
@@ -173,8 +174,11 @@
     public List<EngineerRequest> Requests = new List<EngineerRequest>();
 
     string submitStatus = "invalidSubmit";
+    string formStatus = "visible form";
 
-    
+
+
+
 
     DateTime minDate = DateTime.Now.AddDays(2);
 
@@ -240,6 +244,14 @@
         }
     }
 
+    private void resetForm()
+    {
+
+        submitStatus = "invalidSubmit";
+        formStatus = "visible form";
+        //re-render form
+        engineerRequest = new EngineerRequest();
+    }
 
 
     private async Task HandleValidSubmit()
@@ -255,11 +267,11 @@
                 _context.Requests.Add(engineerRequest);
                 await _context.SaveChangesAsync();
 
-                submitStatus = "validSubmit";            
-            
+                submitStatus = "validSubmit";
+                formStatus = "hidden form";
 
-                //re-render form
-                engineerRequest = new EngineerRequest();
+
+                
             }    
 
         }

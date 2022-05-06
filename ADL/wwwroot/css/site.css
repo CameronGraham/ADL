@@ -149,3 +149,12 @@ a, .btn-link {
 .validSubmit {
     display:block;
 }
+
+.visible {
+    display:block;
+
+}
+.hidden {
+    display:none;
+
+}

@@ -53,7 +53,7 @@ namespace ADL.Data
         [Display(Name = "Job Category")]
         public string? JobCategory { get; set; }
 
-        [StringLength(500, ErrorMessage = "Please enter up to 500 characters")]
+        [StringLength(500, ErrorMessage = "Please enter maximum 500 characters")]
         public string? Comments { get; set; }
 
 
